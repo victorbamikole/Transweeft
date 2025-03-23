@@ -19,6 +19,8 @@ import Map from "@/components/Map";
 import RideCard from "@/components/RideCard";
 import MapView from "react-native-maps";
 import RideLayout from "@/components/RideLayout";
+import BottomSheet, { BottomSheetScrollView, BottomSheetView } from "@gorhom/bottom-sheet";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const Home = () => {
   const handleSignOut = () => {};
@@ -36,6 +38,7 @@ const Home = () => {
     address: "",
   });
 
+  const bottomSheetRef = useRef<BottomSheet>(null);
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -75,17 +78,24 @@ const Home = () => {
   };
 
   return (
-    <RideLayout
-      title={"Choose Ride"}
-      children={
-        <>
-          <Text>Choose Ride</Text>
-          <Text>Choose Ride</Text>
-          <Text>Choose Ride</Text>
-          <Text>Choose Ride</Text>
-        </>
-      }
-    />
+    <GestureHandlerRootView>
+      <View style={styles.mapContainer}>
+        <Map
+          userLatitude={userLocation.latitude}
+          userLongitude={userLocation.longitude}
+          address={null}
+          destinationLatitude={null}
+          destinationLongitude={null}
+        />
+
+        <BottomSheet ref={bottomSheetRef} snapPoints={["60%", "85%"]} index={0}>
+          <BottomSheetView style={styles.bottomSheetContent}>
+          
+            {<></>}
+          </BottomSheetView>
+        </BottomSheet>
+      </View>
+    </GestureHandlerRootView>
   );
 };
 
@@ -95,7 +105,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.white,
-    padding: 15,
   },
   flatListContent: {
     paddingBottom: 100,
@@ -112,6 +121,11 @@ const styles = StyleSheet.create({
   noResultText: {
     fontSize: 14,
     color: COLORS.black,
+  },
+  bottomSheetContent: {
+    flex: 1,
+    padding: 20,
+    backgroundClip: COLORS.black
   },
   header: {
     flexDirection: "row",
@@ -146,6 +160,7 @@ const styles = StyleSheet.create({
   mapContainer: {
     flexDirection: "row",
     backgroundColor: "transparent",
-    height: 300,
+    height: "100%",
+    flex: 1,
   },
 });
