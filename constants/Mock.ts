@@ -10,7 +10,7 @@ const mockDriversData: Driver[] = [
     profile_image_url: "https://randomuser.me/api/portraits/men/1.jpg",
     car_image_url: "https://source.unsplash.com/400x300/?car",
     rating: 4.8,
-    price: "$25",
+    price: "25",
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ const mockDriversData: Driver[] = [
     profile_image_url: "https://randomuser.me/api/portraits/women/2.jpg",
     car_image_url: "https://source.unsplash.com/400x300/?honda",
     rating: 4.7,
-    price: "$30",
+    price: "30",
   },
   {
     id: 3,
@@ -32,7 +32,7 @@ const mockDriversData: Driver[] = [
     profile_image_url: "https://randomuser.me/api/portraits/men/3.jpg",
     car_image_url: "https://source.unsplash.com/400x300/?tesla",
     rating: 4.9,
-    price: "$40",
+    price: "40",
   },
   {
     id: 4,
@@ -43,7 +43,7 @@ const mockDriversData: Driver[] = [
     profile_image_url: "https://randomuser.me/api/portraits/women/4.jpg",
     car_image_url: "https://source.unsplash.com/400x300/?ford",
     rating: 4.6,
-    price: "$50",
+    price: "50",
   },
   {
     id: 5,
@@ -54,6 +54,7 @@ const mockDriversData: Driver[] = [
     profile_image_url: "https://randomuser.me/api/portraits/men/5.jpg",
     car_image_url: "https://source.unsplash.com/400x300/?chevrolet",
     rating: 4.5,
+    price: "80",
   },
   {
     id: 6,
@@ -64,7 +65,7 @@ const mockDriversData: Driver[] = [
     profile_image_url: "https://randomuser.me/api/portraits/women/6.jpg",
     car_image_url: "https://source.unsplash.com/400x300/?bmw",
     rating: 4.8,
-    price: "$60",
+    price: "60",
   },
   {
     id: 7,
@@ -75,7 +76,7 @@ const mockDriversData: Driver[] = [
     profile_image_url: "https://randomuser.me/api/portraits/men/7.jpg",
     car_image_url: "https://source.unsplash.com/400x300/?mercedes",
     rating: 4.7,
-    price: "$55",
+    price: "55",
   },
   {
     id: 8,
@@ -86,7 +87,7 @@ const mockDriversData: Driver[] = [
     profile_image_url: "https://randomuser.me/api/portraits/women/8.jpg",
     car_image_url: "https://source.unsplash.com/400x300/?audi",
     rating: 4.9,
-    price: "$65",
+    price: "65",
   },
   {
     id: 9,
@@ -97,7 +98,7 @@ const mockDriversData: Driver[] = [
     profile_image_url: "https://randomuser.me/api/portraits/men/9.jpg",
     car_image_url: "https://source.unsplash.com/400x300/?lexus",
     rating: 4.6,
-    price: "$70",
+    price: "70",
   },
   {
     id: 10,
@@ -108,7 +109,7 @@ const mockDriversData: Driver[] = [
     profile_image_url: "https://randomuser.me/api/portraits/women/10.jpg",
     car_image_url: "https://source.unsplash.com/400x300/?subaru",
     rating: 4.7,
-    price: "$35",
+    price: "35",
   },
 ];
 

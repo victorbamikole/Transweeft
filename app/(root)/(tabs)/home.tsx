@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import * as Location from "expo-location";
 import {
   Text,
@@ -9,6 +9,7 @@ import {
   FlatList,
   ActivityIndicator,
   StyleSheet,
+  Dimensions,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { icons, images } from "@/constants";
@@ -19,15 +20,23 @@ import Map from "@/components/Map";
 import RideCard from "@/components/RideCard";
 import MapView from "react-native-maps";
 import RideLayout from "@/components/RideLayout";
-import BottomSheet, { BottomSheetScrollView, BottomSheetView } from "@gorhom/bottom-sheet";
+import BottomSheet, {
+  BottomSheetScrollView,
+  BottomSheetView,
+} from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import DriverCard from "@/components/DriverCard";
+import CustomButton from "@/components/CustomButton";
+import mockDriversData from "@/constants/Mock";
+
+const { height } = Dimensions.get("window");
 
 const Home = () => {
   const handleSignOut = () => {};
 
   const [hasPermission, setHasPermission] = useState<boolean>(false);
   const mapRef = useRef<MapView | null>(null);
-
+  const [selectedDriver, setSelectedDriver] = useState<number>();
   const [userLocation, setUserLocation] = useState<{
     latitude: number | null;
     longitude: number | null;
@@ -37,6 +46,9 @@ const Home = () => {
     longitude: null,
     address: "",
   });
+
+  const minHeight = height * 0.2;
+  const maxHeight = height * 0.8;
 
   const bottomSheetRef = useRef<BottomSheet>(null);
   useEffect(() => {
@@ -68,14 +80,8 @@ const Home = () => {
       });
     })();
   }, []);
-  const handleDestinationPress = (location: {
-    // latitude: number;
-    // longitude: number;
-    // address: string;
-  }) => {
-    // setDestinationLocation(location);
-    // router.push("/(root)/find-ride");
-  };
+
+  const snapPoints = useMemo(() => [minHeight, maxHeight], []);
 
   return (
     <GestureHandlerRootView>
@@ -86,12 +92,43 @@ const Home = () => {
           address={null}
           destinationLatitude={null}
           destinationLongitude={null}
+          driverDetails={undefined}
         />
 
-        <BottomSheet ref={bottomSheetRef} snapPoints={["60%", "85%"]} index={0}>
+        <BottomSheet
+          enableOverDrag={false}
+          ref={bottomSheetRef}
+          snapPoints={snapPoints}
+          index={1}
+          handleStyle={styles.handle}
+          enableContentPanningGesture={false}
+        >
           <BottomSheetView style={styles.bottomSheetContent}>
-          
-            {<></>}
+            {
+              <>
+                {" "}
+                <FlatList
+                  showsVerticalScrollIndicator={false}
+                  contentContainerStyle={{ paddingBottom: 250 }}
+                  data={mockDriversData}
+                  keyExtractor={(item, index) => index.toString()}
+                  renderItem={({ item, index }) => (
+                    <DriverCard
+                      item={item}
+                      selected={selectedDriver!}
+                      setSelected={() => {
+                        setSelectedDriver(item.id!);
+                        router.push({
+                          pathname: "/(root)/book-ride",
+                          params: { driver: JSON.stringify(item) },
+                        });
+                      }}
+                    />
+                  )}
+                  ListFooterComponent={() => <View style={{ height: 20 }} />}
+                />
+              </>
+            }
           </BottomSheetView>
         </BottomSheet>
       </View>
@@ -125,7 +162,7 @@ const styles = StyleSheet.create({
   bottomSheetContent: {
     flex: 1,
     padding: 20,
-    backgroundClip: COLORS.black
+    backgroundClip: COLORS.black,
   },
   header: {
     flexDirection: "row",
@@ -162,5 +199,10 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     height: "100%",
     flex: 1,
+  },
+  handle: {
+    height: 5,
+    borderRadius: 5,
+    alignSelf: "center",
   },
 });

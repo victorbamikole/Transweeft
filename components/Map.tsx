@@ -21,9 +21,11 @@ const Map = ({
   userLongitude,
   destinationLatitude,
   destinationLongitude,
+  driverDetails
+
 }: MapData) => {
   const [selectedDriver, setSelectedDriver] = useState();
-  const [markers, setMarkers] = useState<MarkerData[]>([]);
+  const [showMarkers, setShowMarkers] = useState<MarkerData[]>([]);
   const mapRef = useRef<MapView | null>(null);
 
 
@@ -37,6 +39,7 @@ const Map = ({
         userLongitude,
       });
 
+
       const newRegion: Region = {
         latitude: userLatitude ?? 37.78825,
         longitude: userLongitude ?? -122.4324,
@@ -44,11 +47,10 @@ const Map = ({
         longitudeDelta: 0.01,
       };
 
-      setMarkers(newMarkers);
+      setShowMarkers(newMarkers);
        if (mapRef.current) {
           mapRef.current.animateToRegion(newRegion, 1000);
        }
-      console.log('MAKERS', markers);
     }
   }, [mockDriversData, userLatitude, userLongitude]);
 
@@ -67,7 +69,23 @@ const Map = ({
       style={styles.container}
       initialRegion={region}
     >
-      {markers.map((marker, index) => (
+      {driverDetails && (
+        <Marker
+          key={driverDetails.id}
+          coordinate={{
+            latitude: driverDetails.latitude,
+            longitude: driverDetails.longitude,
+          }}
+          title={driverDetails.name}
+          image={
+            driverDetails === +driverDetails.id
+              ? icons.selectedMarker
+              : icons.marker
+          }
+        />
+      )}
+
+      {showMarkers.map((marker, index) => (
         <Marker
           key={marker.id}
           coordinate={{

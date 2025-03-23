@@ -3,103 +3,108 @@ import BottomSheet, {
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
 import { router } from "expo-router";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Image, Text, TouchableOpacity, View, StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+
+import Map from "@/components/Map";
 import { icons } from "@/constants";
-import Map from "./Map";
 import MapView from "react-native-maps";
 
 const RideLayout = ({
   title,
   snapPoints,
-
   children,
+  driverDetails,
 }: {
   title: string;
   snapPoints?: string[];
   children: React.ReactNode;
+  driverDetails: any;
 }) => {
   const bottomSheetRef = useRef<BottomSheet>(null);
+  const mapRef = useRef<MapView>(null);
+
+  useEffect(() => {
+    console.log('DRIVER DETAILS', driverDetails)
+    if (driverDetails && mapRef.current) {
+      mapRef.current.animateToRegion(
+        {
+          latitude: driverDetails.latitude,
+          longitude: driverDetails.longitude,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
+        },
+        1000
+      );
+    }
+  }, [driverDetails]);
 
   return (
-    <></>
-//     <GestureHandlerRootView style={styles.container}>
-//       <View style={styles.wrapper}>
-//         <View style={styles.mapContainer}>
-//           <View style={styles.headerContainer}>
-//             <TouchableOpacity onPress={() => router.back()}>
-//               <View style={styles.backButton}>
-//                 <Image
-//                   source={icons.backArrow}
-//                   resizeMode="contain"
-//                   style={styles.backIcon}
-//                 />
-//               </View>
-//             </TouchableOpacity>
-//             <Text style={styles.title}>{title || "Go Back"}</Text>
-//           </View>
+    <GestureHandlerRootView style={styles.flexContainer}>
+      <View style={styles.flexContainer}>
+        <View style={styles.mapContainer}>
+          <View style={styles.headerContainer}>
+            <TouchableOpacity onPress={() => router.back()}>
+              <View style={styles.backButton}>
+                <Image
+                  source={icons.backArrow}
+                  resizeMode="contain"
+                  style={styles.backIcon}
+                />
+              </View>
+            </TouchableOpacity>
+            <Text style={styles.titleText}>{title || "Go Back"}</Text>
+          </View>
 
-//           {/* <MapView/> */}
-// {/* 
-//           <Map
-//             userLatitude={null}
-//             userLongitude={null}
-//             address={null}
-//             destinationLatitude={null}
-//             destinationLongitude={null}
-//           /> */}
+          <Map
+            userLatitude={null}
+            userLongitude={null}
+            address={null}
+            destinationLatitude={null}
+            destinationLongitude={null}
+            driverDetails={undefined}
+          />
+        </View>
 
-//           {/* <Map
-//             userLatitude={userLocation.latitude}
-//             userLongitude={userLocation.longitude}
-//             address={null}
-//             destinationLatitude={null}
-//             destinationLongitude={null}
-//           /> */}
-//         </View>
-
-//         <BottomSheet
-//           ref={bottomSheetRef}
-//           snapPoints={snapPoints || ["60%", "85%"]}
-//           index={0}
-//         >
-//           {title === "Choose a Rider" ? (
-//             <BottomSheetView style={styles.bottomSheetContent}>
-//               {children}
-//             </BottomSheetView>
-//           ) : (
-//             <BottomSheetScrollView style={styles.bottomSheetContent}>
-//               {children}
-//             </BottomSheetScrollView>
-//           )}
-//         </BottomSheet>
-//       </View>
-//     </GestureHandlerRootView>
+        <BottomSheet
+          ref={bottomSheetRef}
+          snapPoints={snapPoints || ["40%", "85%"]}
+          index={0}
+        >
+          {title === "Choose a Rider" ? (
+            <BottomSheetView style={styles.sheetContainer}>
+              {children}
+            </BottomSheetView>
+          ) : (
+            <BottomSheetScrollView style={styles.sheetContainer}>
+              {children}
+            </BottomSheetScrollView>
+          )}
+        </BottomSheet>
+      </View>
+    </GestureHandlerRootView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  wrapper: {
+  flexContainer: {
     flex: 1,
     backgroundColor: "white",
   },
-//   mapContainer: {
-//     flex: 1,
-//     backgroundColor: "#3B82F6",
-//   },
-//   headerContainer: {
-//     flexDirection: "row",
-//     position: "absolute",
-//     zIndex: 10,
-//     top: 64,
-//     alignItems: "center",
-//     justifyContent: "flex-start",
-//     paddingHorizontal: 20,
-//   },
+  mapContainer: {
+    flex: 1,
+    backgroundColor: "#3B82F6",
+  },
+  headerContainer: {
+    flexDirection: "row",
+    position: "absolute",
+    zIndex: 10,
+    top: 64,
+    alignItems: "center",
+    justifyContent: "flex-start",
+    paddingHorizontal: 20,
+  },
   backButton: {
     width: 40,
     height: 40,
@@ -112,12 +117,12 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
   },
-  title: {
+  titleText: {
     fontSize: 20,
     fontFamily: "JakartaSemiBold",
     marginLeft: 20,
   },
-  bottomSheetContent: {
+  sheetContainer: {
     flex: 1,
     padding: 20,
   },

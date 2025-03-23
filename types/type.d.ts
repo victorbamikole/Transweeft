@@ -86,4 +86,11 @@ declare interface MapData {
   address: string | null;
   destinationLatitude: number | null;
   destinationLongitude: number | null;
+  driverDetails;
+}
+
+declare interface DriverCardProps {
+  item: MarkerData;
+  selected: number;
+  setSelected: () => void;
 }
