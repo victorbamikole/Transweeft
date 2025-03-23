@@ -14,32 +14,49 @@ import {
 import { MapData } from "@/types/type";
 import mockDriversData from "@/constants/Mock";
 
-// const directionsAPI = process.env.EXPO_PUBLIC_DIRECTIONS_API_KEY;
-
 const Map = ({
   userLatitude,
   userLongitude,
   destinationLatitude,
   destinationLongitude,
-  driverDetails
-
+  driverDetails,
 }: MapData) => {
   const [selectedDriver, setSelectedDriver] = useState();
   const [showMarkers, setShowMarkers] = useState<MarkerData[]>([]);
   const mapRef = useRef<MapView | null>(null);
 
+useEffect(() => {
+  if (Array.isArray(mockDriversData)) {
+    const newMarkers = generateMarkersFromData({
+      data: mockDriversData,
+      userLatitude,
+      userLongitude,
+    });
 
-  useEffect(() => {
-    if (Array.isArray(mockDriversData)) {
-      // if (!userLatitude || !userLongitude) return;
+    if (driverDetails) {
+      const driverArrayDetails = Array.isArray(driverDetails)
+        ? driverDetails
+        : [driverDetails];
 
-      const newMarkers = generateMarkersFromData({
-        data: mockDriversData,
-        userLatitude,
-        userLongitude,
-      });
+      console.log("DLAT", driverDetails.latitude);
+      console.log("DLAT", driverDetails.longitude);
 
+      setShowMarkers(driverArrayDetails);
 
+      const newRegion: Region = {
+        latitude: driverDetails.latitude,
+        longitude: driverDetails.longitude,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+      };
+
+      // Delay the animation slightly to ensure map is ready
+      setTimeout(() => {
+        if (mapRef.current) {
+          mapRef.current.animateToRegion(newRegion, 1000);
+        }
+      }, 500); // Adjust delay if needed
+    } else {
       const newRegion: Region = {
         latitude: userLatitude ?? 37.78825,
         longitude: userLongitude ?? -122.4324,
@@ -48,11 +65,16 @@ const Map = ({
       };
 
       setShowMarkers(newMarkers);
-       if (mapRef.current) {
+
+      setTimeout(() => {
+        if (mapRef.current) {
           mapRef.current.animateToRegion(newRegion, 1000);
-       }
+        }
+      }, 500);
     }
-  }, [mockDriversData, userLatitude, userLongitude]);
+  }
+}, [mockDriversData, userLatitude, userLongitude, driverDetails]);
+
 
   const region = calculateRegion({
     userLatitude,
@@ -69,22 +91,6 @@ const Map = ({
       style={styles.container}
       initialRegion={region}
     >
-      {driverDetails && (
-        <Marker
-          key={driverDetails.id}
-          coordinate={{
-            latitude: driverDetails.latitude,
-            longitude: driverDetails.longitude,
-          }}
-          title={driverDetails.name}
-          image={
-            driverDetails === +driverDetails.id
-              ? icons.selectedMarker
-              : icons.marker
-          }
-        />
-      )}
-
       {showMarkers.map((marker, index) => (
         <Marker
           key={marker.id}

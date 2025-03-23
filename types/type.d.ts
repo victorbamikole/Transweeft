@@ -86,7 +86,7 @@ declare interface MapData {
   address: string | null;
   destinationLatitude: number | null;
   destinationLongitude: number | null;
-  driverDetails;
+  driverDetails: any;
 }
 
 declare interface DriverCardProps {

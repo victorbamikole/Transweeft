@@ -37,7 +37,8 @@ export const images = {
   onboarding1,
   onboarding2,
   onboarding3,
-  signup_car
+  signup_car,
+  check
 };
 
 export const icons = {
@@ -66,6 +67,7 @@ export const icons = {
   star,
   target,
   to,
+  check
 };
 
 export const onboarding = [

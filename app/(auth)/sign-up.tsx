@@ -1,10 +1,17 @@
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { icons, images } from "@/constants";
 import InputField from "@/components/InputField";
 import CustomButton from "@/components/CustomButton";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import COLORS from "@/constants/Colors";
 
 const SignUp = () => {
@@ -50,7 +57,11 @@ const SignUp = () => {
         </View>
       </View>
       <CustomButton
-        onPress={() => {}}
+        onPress={() => {
+          router.push({
+            pathname: "/sign-in",
+          });
+        }}
         title={"Sign Up"}
         bgVariant="primary"
         textVariant="default"
@@ -118,7 +129,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 18,
-    color: COLORS.black, 
+    color: COLORS.black,
     textAlign: "center",
   },
   linkText: {

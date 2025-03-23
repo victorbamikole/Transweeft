@@ -20,25 +20,15 @@ const RideLayout = ({
   title: string;
   snapPoints?: string[];
   children: React.ReactNode;
-  driverDetails: any;
+  driverDetails?: {
+    id: string;
+    latitude: number;
+    longitude: number;
+    name: string;
+  };
 }) => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const mapRef = useRef<MapView>(null);
-
-  useEffect(() => {
-    console.log('DRIVER DETAILS', driverDetails)
-    if (driverDetails && mapRef.current) {
-      mapRef.current.animateToRegion(
-        {
-          latitude: driverDetails.latitude,
-          longitude: driverDetails.longitude,
-          latitudeDelta: 0.01,
-          longitudeDelta: 0.01,
-        },
-        1000
-      );
-    }
-  }, [driverDetails]);
 
   return (
     <GestureHandlerRootView style={styles.flexContainer}>
@@ -63,7 +53,7 @@ const RideLayout = ({
             address={null}
             destinationLatitude={null}
             destinationLongitude={null}
-            driverDetails={undefined}
+            driverDetails={driverDetails}
           />
         </View>
 

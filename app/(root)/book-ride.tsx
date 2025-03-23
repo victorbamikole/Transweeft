@@ -1,68 +1,101 @@
 import { Image, Text, View, StyleSheet } from "react-native";
 import RideLayout from "@/components/RideLayout";
-import { icons } from "@/constants";
+import { icons, images } from "@/constants";
 import { useState } from "react";
 import { formatTime } from "@/libs/utils";
 import { useLocalSearchParams } from "expo-router";
 import CustomButton from "@/components/CustomButton";
+import ReactNativeModal from "react-native-modal";
+import { router } from "expo-router";
 
 const BookRide = () => {
   const { driver } = useLocalSearchParams();
   const driverDetails = driver ? JSON.parse(driver as string) : null;
+  const [success, setSuccess] = useState<boolean>(false);
   console.log("DETAILS", driverDetails);
   return (
-    <RideLayout title="Book Ride" driverDetails={driverDetails}>
-      <>
-        <Text style={styles.title}>Ride Details</Text>
+    <>
+      <ReactNativeModal
+        isVisible={success}
+        onBackdropPress={() => setSuccess(false)}
+      >
+        <View style={styles.modalContainer}>
+          <Image source={images.check} style={styles.image} />
 
-        <View style={styles.driverContainer}>
-          <Image
-            source={{ uri: driverDetails?.profile_image_url }}
-            style={styles.driverImage}
-          />
+          <Text style={styles.title}>Booking placed successfully</Text>
 
-          <View style={styles.driverInfoContainer}>
-            <Text style={styles.driverTitle}>{driverDetails?.title}</Text>
-            <View style={styles.ratingContainer}>
-              <Image
-                source={icons.star}
-                style={styles.ratingIcon}
-                resizeMode="contain"
-              />
-              <Text style={styles.ratingText}>{driverDetails?.rating}</Text>
-            </View>
-          </View>
-        </View>
+          <Text style={styles.description}>
+            Thank you for your booking. Your reservation has been successfully
+            placed. Please proceed with your trip.
+          </Text>
 
-        <View style={styles.detailsContainer}>
-          <View style={styles.detailRow}>
-            <Text style={styles.detailLabel}>Driver Name</Text>
-            <Text style={styles.priceText}>{driverDetails?.name}</Text>
-          </View>
-          <View style={styles.detailRow}>
-            <Text style={styles.detailLabel}>Ride Price</Text>
-            <Text style={styles.priceText}>${driverDetails?.price}</Text>
-          </View>
-
-          <View style={styles.detailRow}>
-            <Text style={styles.detailLabel}>Car Model</Text>
-            <Text style={styles.priceText}>{driverDetails?.car_model}</Text>
-          </View>
-        </View>
-
-        <View style={styles.addressContainer}>
           <CustomButton
-            onPress={undefined}
-            title={"Book Ride"}
+            title="Back Home"
+            onPress={() => {
+              setSuccess(false);
+              router.push("/(root)/(tabs)/home");
+            }}
+            style={styles.button}
             bgVariant={undefined}
             textVariant={undefined}
             IconLeft={undefined}
             IconRight={undefined}
-            style={undefined}
           />
         </View>
-      </>
-    </RideLayout>
+      </ReactNativeModal>
+      <RideLayout title="Book Ride" driverDetails={driverDetails}>
+        <>
+          <Text style={styles.title}>Ride Details</Text>
+
+          <View style={styles.driverContainer}>
+            <Image
+              source={{ uri: driverDetails?.profile_image_url }}
+              style={styles.driverImage}
+            />
+
+            <View style={styles.driverInfoContainer}>
+              <Text style={styles.driverTitle}>{driverDetails?.title}</Text>
+              <View style={styles.ratingContainer}>
+                <Image
+                  source={icons.star}
+                  style={styles.ratingIcon}
+                  resizeMode="contain"
+                />
+                <Text style={styles.ratingText}>{driverDetails?.rating}</Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.detailsContainer}>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>Driver Name</Text>
+              <Text style={styles.priceText}>{driverDetails?.name}</Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>Ride Price</Text>
+              <Text style={styles.priceText}>${driverDetails?.price}</Text>
+            </View>
+
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>Car Model</Text>
+              <Text style={styles.priceText}>{driverDetails?.car_model}</Text>
+            </View>
+          </View>
+
+          <View style={styles.addressContainer}>
+            <CustomButton
+              onPress={() => {setSuccess(true)}}
+              title={"Book Ride"}
+              bgVariant={undefined}
+              textVariant={undefined}
+              IconLeft={undefined}
+              IconRight={undefined}
+              style={undefined}
+            />
+          </View>
+        </>
+      </RideLayout>
+    </>
   );
 };
 
@@ -156,6 +189,35 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: "JakartaRegular",
     marginLeft: 8,
+  },
+  modalContainer: {
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "white",
+    padding: 28,
+    borderRadius: 20,
+  },
+  image: {
+    width: 112, // Equivalent to w-28
+    height: 112, // Equivalent to h-28
+    marginTop: 20, // Equivalent to mt-5
+  },
+  titleModal: {
+    fontSize: 24, // Equivalent to text-2xl
+    textAlign: "center",
+    fontFamily: "JakartaBold",
+    marginTop: 20, // Equivalent to mt-5
+  },
+  description: {
+    fontSize: 16, // Equivalent to text-md
+    color: "#A0A0A0", // Equivalent to text-general-200
+    fontFamily: "JakartaRegular",
+    textAlign: "center",
+    marginTop: 12, // Equivalent to mt-3
+  },
+  button: {
+    marginTop: 20, // Equivalent to mt-5
   },
 });
 
