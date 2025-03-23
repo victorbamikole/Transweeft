@@ -45,7 +45,7 @@ This project is a mobile application developed for the **Transweeft** assessment
 - Improve UI/UX with better animations and transitions.
 
 ## Contact
-For any issues or inquiries, reach out via [your email/contact info].
+For any issues or inquiries, reach out via victorbamikole92@gmail.com.
 
 ---
 **Author:** Victor Bamikole 
