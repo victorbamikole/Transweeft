@@ -1,50 +1,53 @@
-# Welcome to your Expo app 👋
+# Transweeft Mobile App Developer Assessment
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Overview
+This project is a mobile application developed for the **Transweeft** assessment, focusing on urban transportation. The app is built using **React Native** and integrates key functionalities such as **Google Maps API**, payment gateway integration, Firebase, and RESTful APIs.
 
-## Get started
+## Tech Stack
+- **React Native** (Expo/CLI)
+- **Google Maps API** (for real-time location tracking and route planning)
 
-1. Install dependencies
+## Features
+- User authentication (Signup/Login screen)
+- Real-time location tracking with Google Maps
+- Display selected driver as a **marker on the map**
+- Ride booking functionality mock
+- Interactive UI with smooth animations
 
-   ```bash
-   npm install
+## Installation & Setup
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/victorbamikole/Transweeft.git
+   cd TransSweeft
+   ```
+2. Install dependencies:
+   ```sh
+   npm install  
+   ```
+4. Run the project:
+   ```sh
+   npx expo start  
+   npx react-native run-android  
+   npx react-native run-ios 
    ```
 
-2. Start the app
+## How to Use
+1. Open the app and just type any credentials.
+2. Allow location permissions to access real-time map data.
+3. Available drivers are shown on the home tab.
+4. Select a driver and view their location on the map.
+5. Confirm ride booking and complete payment mock.
 
-   ```bash
-    npx expo start
-   ```
 
-In the output, you'll find options to open the app in a
+## Future Enhancements
+- Implement push notifications for ride updates.
+- Optimize app performance with React Native Reanimated.
+- Improve UI/UX with better animations and transitions.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Contact
+For any issues or inquiries, reach out via [your email/contact info].
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
+**Author:** Victor Bamikole 
+**Date:** 2025-03-23
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
