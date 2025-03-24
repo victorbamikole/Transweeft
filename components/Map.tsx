@@ -8,6 +8,12 @@ import { icons } from "@/constants";
 import { Driver, MarkerData } from "@/types/type";
 // import { APP_LOGGING } from "react-native-dotenv";
 // console.log("APP_LOGGING", APP_LOGGING);
+import Constants from "expo-constants";
+
+const GOOGLE_MAPS_API_KEY = Constants.expoConfig?.extra?.googleMapsApiKey;
+console.log("GOOGLE_MAPS_API_KEY", GOOGLE_MAPS_API_KEY);
+
+console.log(GOOGLE_MAPS_API_KEY);
 import {
   calculateDriverTimes,
   calculateRegion,
