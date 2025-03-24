@@ -106,7 +106,6 @@ const Home = () => {
           <BottomSheetView style={styles.bottomSheetContent}>
             {
               <>
-                {" "}
                 <FlatList
                   showsVerticalScrollIndicator={false}
                   contentContainerStyle={{ paddingBottom: 250 }}

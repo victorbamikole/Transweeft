@@ -6,6 +6,8 @@ import MapViewDirections from "react-native-maps-directions";
 import { icons } from "@/constants";
 
 import { Driver, MarkerData } from "@/types/type";
+// import { APP_LOGGING } from "react-native-dotenv";
+// console.log("APP_LOGGING", APP_LOGGING);
 import {
   calculateDriverTimes,
   calculateRegion,

@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
   },
   width: {
     width: "90%",
+    marginBottom: 30
   },
   skipText: {
     color: "#000",
